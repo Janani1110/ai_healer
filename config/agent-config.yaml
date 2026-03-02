@@ -1,0 +1,78 @@
+agent:
+  name: "Self-Healing CI/CD Agent"
+  version: "1.0.0"
+  polling_interval: 30  # seconds
+  max_concurrent_fixes: 5
+
+monitoring:
+  platforms:
+    - github_actions
+    - gitlab_ci
+    - jenkins
+  
+  filters:
+    branches:
+      - main
+      - master
+      - develop
+    ignore_patterns:
+      - "dependabot/*"
+      - "renovate/*"
+
+error_classification:
+  categories:
+    - dependency_conflict
+    - test_failure
+    - syntax_error
+    - configuration_error
+    - environment_issue
+    - timeout
+    - resource_limit
+
+auto_fix:
+  enabled: true
+  strategies:
+    dependency_conflict:
+      - update_version
+      - pin_version
+      - remove_conflict
+    test_failure:
+      - fix_assertion
+      - update_mock
+      - skip_flaky
+    syntax_error:
+      - auto_format
+      - fix_import
+      - correct_syntax
+    configuration_error:
+      - update_config
+      - add_missing_key
+    environment_issue:
+      - add_env_var
+      - update_path
+
+commit:
+  auto_commit: true
+  branch_strategy: "same_branch"  # or "new_branch"
+  commit_message_template: "🤖 Auto-fix: {error_type} - {description}"
+  author:
+    name: "CI Healing Agent"
+    email: "agent@ci-healer.dev"
+
+retry:
+  enabled: true
+  max_attempts: 3
+  backoff_multiplier: 2
+
+notifications:
+  enabled: true
+  channels:
+    - slack
+    - email
+  on_success: true
+  on_failure: true
+
+learning:
+  enabled: true
+  store_fixes: true
+  improve_from_history: true
