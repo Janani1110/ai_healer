@@ -236,11 +236,6 @@ MIT License - see [LICENSE](LICENSE) file for details.
 - **FastAPI** for amazing framework
 - **React** for beautiful UI
 
-## 📞 Contact
-
-- **GitHub:** [@Atshayaa10](https://github.com/Atshayaa10)
-- **Repository:** [self-healing-cicd](https://github.com/Atshayaa10/self-healing-cicd)
-- **Issues:** [Report a bug](https://github.com/Atshayaa10/self-healing-cicd/issues)
 
 ## ⭐ Star Us!
 
